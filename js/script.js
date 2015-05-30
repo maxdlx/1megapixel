@@ -12,7 +12,7 @@
 	game.finished = 0;
 
 	game.lastTime = +(new Date());
-	game.idle = 0;
+	game.idle = 1;
 	game.idleSince = 0;
 	game.deltaTime = 0;
 	game.now = game.lastTime;
@@ -103,10 +103,9 @@
 			game.idleSince = 0;
 		} else if (!game.idle) {
 			game.idleSince = game.idleSince || game.now;
-
 			if ((game.now - game.idleSince) > 3E3) {
 				game.idle = 1;
-				famobi.forceAd(submitHighscore);
+				submitHighscore();
 			}
 		}
 
