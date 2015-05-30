@@ -54,7 +54,7 @@
 	game.offset = document.querySelector('.list').offsetTop;
 	function trackDistance() {
 		game.dist = (window.scrollY - game.offset)/1000;
-		document.querySelector('#m').innerText = numFormat(Math.max(0,game.dist));
+		document.querySelector('#m').innerHTML = numFormat(Math.max(0,game.dist));
 
 		if (game.dist >= 1000) {
 			if (!game.finished)
@@ -64,7 +64,7 @@
 	};
 
 	function numFormat(e){
-		return e.toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+		return e.toFixed(3).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
 	};
 
 	function finishGame() {
@@ -77,11 +77,11 @@
 		document.querySelector('.game').style.height = '1000000000000000px';
 	}
 
-	function startGame() {
-	}
+	game.start = function() {
+		trackDistance();
+		fillLines();
+		posLines();
+	};
 
-	trackDistance();
-	fillLines();
-	posLines();
-	startGame();
+	game.start();
 }(Zepto);
