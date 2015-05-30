@@ -7,23 +7,30 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-<h1>Megapixel</h1>
-<p>Scroll as fast as you can, as far as you can.</p>
-<h2>&darr; This way</h2>
-<ul class="list">
-	<li class="meters" data-meters="0">0m</li>
-	<li class="meters" data-meters="0.5">0.5m</li>
-	<li class="meters" data-meters="1">1m</li>
-	<li class="meters" data-meters="5">5m</li>
-	<li class="meters" data-meters="10">10m</li>
-	<li class="meters" data-meters="20">20m</li>
-	<li class="meters" data-meters="50">50m</li>
-	<li class="meters" data-meters="100">100m</li>
-	<li class="meters" data-meters="200">200m</li>
-	<li class="meters" data-meters="400">400m</li>
-	<li class="meters" data-meters="800">800m</li>
-	<li class="meters" data-meters="1000">1,000,000m</li>
-</ul>
+<article class="game">
+	<h1>Megapixel</h1>
+	<p>1,000,000 pixels</p>
+	<h2>&darr; This way&hellip;</h2>
+	<!-- <h3>The universe
+	is expanding</h2> -->
+	<h3>Scroll as fast
+	as you can&hellip;
+&hellip; as far as you can!</h3>
+	<ul class="list">
+		<li class="meters" data-meters="0">0m</li>
+		<li class="meters" data-meters="0.5">0.5m</li>
+		<li class="meters" data-meters="1">1m</li>
+		<li class="meters" data-meters="5">5m</li>
+		<li class="meters" data-meters="10">10m</li>
+		<li class="meters" data-meters="20">20m</li>
+		<li class="meters last" data-meters="1000">1,000,000m</li>
+	</ul>
+	<div class="dist">
+		Distance:
+		<span id="m"></span>m
+		<button class="finish">Click here to submit your highscore</button>
+	</div>
+</article>
 <script type="text/javascript" src="js/zepto.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 </body>

@@ -3,8 +3,8 @@
 
 	var game = {};
 
-	game.goal = 1E3; // 1,000,000
-	game.step = 25;
+	game.goal = 1E3; // 1,000
+	game.step = 50;
 
 	game.list = $('.list');
 
@@ -36,18 +36,52 @@
 
 		var c = goal / stepWidth,
 			i = 0,
-			m = 0;
+			m = 0,
+			li = '';
 
 		for (i; i < c; i++) {
 			m = i*stepWidth;
-			console.log(m, c, i, steps);
-			// console.log(i*stepWidth);
+
 			if (!steps[m]) {
-				game.list.append('<li class="meters intermediate" data-meters="' + m + '">' + m + 'm</li>');
+				li += '<li class="meters intermediate" data-meters="' + m + '">' + m + 'm</li>';
 			}
 		}
+		game.list.append(li);
 	};
 
+	game.finished = 0;
+	game.dist = 0;
+	game.offset = document.querySelector('.list').offsetTop;
+	function trackDistance() {
+		game.dist = (window.scrollY - game.offset)/1000;
+		document.querySelector('#m').innerText = numFormat(Math.max(0,game.dist));
+
+		if (game.dist >= 1000) {
+			if (!game.finished)
+				finishGame();
+		}
+		window.requestAnimationFrame(trackDistance);
+	};
+
+	function numFormat(e){
+		return e.toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+	};
+
+	function finishGame() {
+		game.finished = 1;
+		alert("You did it! Respect :)");
+		document.querySelector('.finish').style.display = 'block';
+		document.querySelector('.finish').onclick = function() {
+			famobi.submitHighscore(0, game.dist);
+		};
+		document.querySelector('.game').style.height = '1000000000000000px';
+	}
+
+	function startGame() {
+	}
+
+	trackDistance();
 	fillLines();
 	posLines();
+	startGame();
 }(Zepto);
