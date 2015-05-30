@@ -1,19 +1,43 @@
 html, body {
 	height: 100%;
 	font-family: "Arial Black", Arial, "Helvetica Neue", sans-serif;
+	font-size: 30px;
 	letter-spacing: -0.05em;
-	text-shadow: 1px 1px 0px #ddd;
-	color: #333;
+	text-shadow: 0px -1px 2px #fff;
+	color: #000;
 	padding: 0;
 	margin: 0;
+	background: #000;
+	min-height: 1000000px;
 }
 
 body > * {
 	padding: 0 10px;
+
+	transform: translate(0,0,0,0);
+
+	max-height: 10000000px;
 }
 
-h1, h2 {
+.game {
+	max-width: 320px;
+}
+
+.dist {
+	position: fixed;
+	top: 10px;
+	right: 30px;
+	height: 30px;
+	width: 200px;
+
+	text-align: right;
+	font-size: 30px;
+}
+
+h1, h2, h3 {
 	border-bottom: 10px solid #ddd;
+	text-align: justify;
+	white-space: pre;
 }
 
 ul > li {
@@ -25,22 +49,39 @@ ul.list {
 }
 
 .meters {
-	border-bottom: 10px dashed #333;
+	background: rgba(255,255,255,.1);
+	border-top: 10px dashed #333;
 
-	transition: top 5s;
-	-moz-transition: top 5s;
-	-ms-transition: top 5s;
-	-webkit-transition: top 5s;
+	/*transition: top 30s;
+	-moz-transition: top 30s;
+	-ms-transition: top 30s;
+	-webkit-transition: top 30s;*/
 
 	top: 0;
 	display: block;
 	position: absolute;
+	font-size: 100px;
 
 	height: 20px;
 	width: 100%;
 }
 
 .intermediate {
-	color: #ddd;
+	color: #aaa;
 	border-color: #ddd;
+}
+
+.last {
+	height: 1000px;
+}
+
+button.finish {
+	background: #333;
+	color: #fff;
+	display: none;
+
+	border: 0;
+	cursor: pointer;
+	font-size: 15px;
+	width: 100%;
 }
