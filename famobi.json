@@ -1,5 +1,19 @@
 {
     "features": {
         "highscores": 1
-    }
+    },
+	"game_i18n" : {
+		"default" : {
+			"msg_finished": "Respect 8)\nYou did it!"
+		},
+		"de": {
+
+		},
+		"en": {
+
+		},
+		"tr": {
+
+		}
+	}
 }

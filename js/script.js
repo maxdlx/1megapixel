@@ -6,21 +6,22 @@
 	var game = {};
 
 	game.goal = 1E3; // 1,000
-	game.step = 50;
+	game.step = 10;
 
 	game.list = $('.list');
 	game.finished = 0;
 
 	game.lastTime = +(new Date());
 	game.idle = 0;
+	game.idleSince = 0;
 	game.deltaTime = 0;
+	game.now = game.lastTime;
 
 	// fired on every tick, when a frame is requested
 	game.tick = function() {
-		var now = +(new Date());
-
-		game.deltaTime = now - game.lastTime;
-		game.lastTime = now;
+		game.now = +(new Date());
+		game.deltaTime = game.now - game.lastTime;
+		game.lastTime = game.now;
 
 		trackDistance();
 
@@ -33,9 +34,9 @@
 
 	// ticker
 	game.update = function() {
-		this.tick();
+		game.tick();
 
-		window.requestAnimationFrame(this.update);
+		window.requestAnimationFrame(game.update);
 	};
 
 	// position the lines from the top of the screen according to their data-meters attribute
@@ -88,16 +89,24 @@
 		document.querySelector('#m').innerHTML = numFormat(Math.max(0,game.dist));
 
 		// check if distance has change in the last X sec
-		if (game.dist - game.lastDistance) {
+		game.deltaDistance = game.dist - game.lastDistance;
+
+		famobi.log(game.now, 'game.now');
+		famobi.log(game.idle, 'game.idle');
+		famobi.log(game.idleSince, 'game.idleSince');
+		famobi.log(game.deltaDistance, 'game.deltaDistance');
+		famobi.log(game.now - game.idleSince, '(game.now - game.idleSince)');
+		famobi.log(game.deltaTime, 'delta > 1 sec');
+
+		if (game.deltaDistance > 0) {
 			game.idle = 0;
-		} else {
-			game.idle = 1;
+			game.idleSince = 0;
+		} else if (!game.idle) {
+			game.idleSince = game.idleSince || game.now;
 
-			if (game.deltaTime > 1E3) {
-				console.log(game.dist - game.lastDistance, 'game.dist - game.lastDistance');
-				console.log(game.deltaTime, 'delta > 1 sec');
-
-				submitHighscore();
+			if ((game.now - game.idleSince) > 3E3) {
+				game.idle = 1;
+				famobi.forceAd(submitHighscore);
 			}
 		}
 
@@ -110,7 +119,7 @@
 
 	function finishGame() {
 		game.finished = 1;
-		alert("You did it! Respect 8)");
+		alert(famobi.__("msg_finished"));
 		document.querySelector('.finish').style.display = 'block';
 		document.querySelector('.finish').onclick = submitHighscore;
 		document.querySelector('body').style.minHeight = '1000000000000000px';
@@ -126,6 +135,8 @@
 		trackDistance();
 		fillLines();
 		posLines();
+
+		game.update();
 	};
 
 	game.start();

@@ -9,6 +9,14 @@
 		window.famobi_gameID = '1megapixel';
 		window.famobi_gameJS = ['js/script.js', function() {
 			window.focus();
+
+			function handleMouseDown(evt) {  
+				window.focus();   
+				evt.preventDefault();  
+				evt.stopPropagation();  
+				evt.target.style.cursor = 'default';  
+			}  
+			document.getElementsByTagName('body')[0].addEventListener('mousedown', handleMouseDown, false);  
 		}];
 	</script>
 </head>
