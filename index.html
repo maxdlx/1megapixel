@@ -5,6 +5,12 @@
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,width=device-width,minimal-ui" />
 	<title>Megapixel Project</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script>
+		window.famobi_gameID = '1megapixel';
+		window.famobi_gameJS = ['js/script.js', function() {
+			window.focus();
+		}];
+	</script>
 </head>
 <body>
 <article class="game">
@@ -31,7 +37,14 @@
 		<button class="finish">Click here to submit <br>your distance</button>
 	</div>
 </article>
-<script type="text/javascript" src="js/zepto.min.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+<script>
+(function (document, url, fgJS, firstJS) {
+   fgJS = document.createElement('script');
+firstJS = document.getElementsByTagName('script')[0];
+
+fgJS.src = url + encodeURIComponent(document.location.href);
+firstJS.parentNode.insertBefore(fgJS, firstJS);
+})(document, '/html5games/gameapi/v1.js?e=');
+</script>
 </body>
 </html>
