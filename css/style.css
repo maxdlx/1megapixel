@@ -2,9 +2,12 @@ html, body {
 	height: 100%;
 	padding: 0;
 	margin: 0;
-	background: #000 url('../img/Starfield.png') top left repeat;
+	background: #000 url('../img/Starfield.png') 0 0 repeat;
 	/*background-size: 100% 100%;*/
-	min-height: 1000000px;
+}
+
+body {
+	min-height: 1001000px;
 }
 
 body > * {
@@ -12,12 +15,10 @@ body > * {
 
 	transform: translate(0,0,0,0);
 
-	max-height: 1000000000000000px;
+	max-height: 100000000px;
 }
 
-.game {
-	height: 100%;
-	width: 100%;
+article {
 	max-width: 320px;
 	
 	font-family: "Arial Black", Arial, "Helvetica Neue", sans-serif;
@@ -25,6 +26,23 @@ body > * {
 	letter-spacing: -0.05em;
 	text-shadow: 0px -1px 2px #fff;
 	color: #000;
+}
+
+button, 
+input[type=text], 
+input[type=password] {
+	font-family: "Arial Black", Arial, "Helvetica Neue", sans-serif;
+	font-size: 30px;
+	letter-spacing: -0.05em;
+	text-shadow: 0px -1px 2px #fff;
+	color: #000;
+	background: #111;
+	padding: 5px 10px;
+}
+
+.game {
+	height: 100%;
+	width: 100%;
 }
 
 .dist {
