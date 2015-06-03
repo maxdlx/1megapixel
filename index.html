@@ -5,17 +5,51 @@
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,width=device-width,minimal-ui" />
 	<title>Megapixel Project</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="//www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+	<script>
+		window.famobi_gameID = '1megapixel';
+		window.famobi_gameJS = ['js/script.js', function() {
+			window.focus();
+		}];
+
+		Parse.initialize("2EIFjBw3AzCuKYsT8z7BGDM9tchuuGLEPT0JNa4k", "KKfKRgi7HPlHbyJZz0rpqlTS6BKHas76alBHzHTn");
+	</script>
+	<script>
+		(function (document, url, fgJS, firstJS) {
+			fgJS = document.createElement('script');
+			firstJS = document.getElementsByTagName('script')[0];
+
+			fgJS.src = url + encodeURIComponent(document.location.href);
+			firstJS.parentNode.insertBefore(fgJS, firstJS);
+		})(document, '//games.cdn.famobi.com/html5games/gameapi/v1.js?e=');
+	</script>
+	<script src="http://api.famobi.com/gameapi/script/f8f6bf15-2db4-4c58-8134-e0e2f5311e63/2365bd71-8cf1-4e53-bd6c-1daf969e450f?_location=/?fg_domain=play.famobi.com&fg_aid=A1200-2&fg_uid=f8f6bf15-2db4-4c58-8134-e0e2f5311e63&fg_pid=2365bd71-8cf1-4e53-bd6c-1daf969e450f&fg_beat=755"></script>
 </head>
 <body>
-<article class="game">
+<article class="pregame"><!-- 
 	<h1>Megapixel</h1>
 	<p>1,000,000 pixels</p>
 	<h2>&darr; This way&hellip;</h2>
-	<!-- <h3>The universe
-	is expanding</h2> -->
 	<h3>Scroll as fast
 	as you can&hellip;
-&hellip; as far as you can!</h3>
+&hellip; as far as you can!</h3> -->
+</article>
+<article class="game">
+	<form class="user-form">
+		<h2>Hello!</h2>
+		<fieldset>
+			<legend>Sign in with Facebook</legend>
+			<button class="fb-login">f</button>
+		</fieldset>
+		<fieldset>
+			<legend>Username</legend>
+			<input class="username" type="text">
+		</fieldset>
+		<fieldset>
+			<legend>Password</legend>
+			<input class="password" type="password">
+		</fieldset>
+	</form>
 	<ul class="list">
 		<li class="meters" data-meters="0">0m</li>
 		<li class="meters" data-meters="0.5">0.5m</li>
@@ -31,7 +65,7 @@
 		<button class="finish">Click here to submit <br>your distance</button>
 	</div>
 </article>
-<script type="text/javascript" src="js/zepto.min.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+<article class="credits">
+</article>
 </body>
 </html>
