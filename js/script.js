@@ -1,5 +1,5 @@
 /* jshint undef: true, unused: true */
-/* global famobi, faZepto */
+/* global famobi, Parse */
 (function() {
 	'use strict';
 
@@ -73,7 +73,7 @@
 			m = parseFloat(elem.getAttribute('data-meters'));
 
 			elem.style.top = m*1000 + 'px';
-		};
+		}
 	}
 
 	// fill lines in steps for better orientation
@@ -90,14 +90,13 @@
 			m = parseFloat(elem.getAttribute('data-meters'));
 
 			steps[m] = !0;
-		});
+		}
 
 		var c = goal / stepWidth,
-			i = 0,
 			m = 0,
 			li = '';
 
-		for (i; i < c; i++) {
+		for (i = 0; i < c; i++) {
 			m = i*stepWidth;
 
 			if (!steps[m]) {
@@ -114,7 +113,8 @@
 		do {
 			m = pl.dist;
 			li += '<li class="enemy" data-meters="' + m + '"><img src="'+pl.avatar+'">'+pl.name+'</li>';
-		} while(pl = getNextPlayer());
+      pl = getNextPlayer();
+		} while(pl);
 		game.list.append(li);
 	}
 
@@ -233,7 +233,8 @@
 	}
 
 	function getNextPlayer() {
-		return game.nextPlayer = game.players.shift();
+    game.nextPlayer = game.players.shift();
+		return game.nextPlayer;
 	}
 
 	function finishGame() {
