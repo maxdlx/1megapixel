@@ -93,7 +93,20 @@ ul.list {
 }
 
 .last {
-	height: 1000px;
+	height: 2000px;
+}
+
+.enemy {
+	top: 0;
+	display: block;
+	position: absolute;
+	font-size: 20px;
+
+	height: 20px;
+	width: 100%;
+
+	background: #fff;
+	opacity: 0.8;
 }
 
 button.finish {

@@ -1,33 +1,58 @@
 /* jshint undef: true, unused: true */
 /* global famobi, faZepto */
-(function($) {
+(function() {
 	'use strict';
 
-	var game = {};
+	var now = +(new Date());
+	var game = {
+		"goal": 1E3,
+		"step": 10,
+		"list": document.querySelector('.list'),
+		"finished": 0,
+		"lastTime": now,
+		"idle": 1,
+		"idleSince": 0,
+		"deltaTime": 0,
+		"now": now,
+		"players": [],
+		"nextPlayer": {
+			"id": "",
+			"dist": 0,
+			"distf": "",
+			"name": "",
+			"avatar": "",
+			"dummy": ""
+		},
+		"htmlElement": document.querySelector('html'),
+		"bodyElement": document.querySelector('body'),
+		"distElement": document.querySelector('#m'),
+		"dist": document.querySelector('.list').offsetTop,
+		"offset": 0,
+		"lastDistance": 0,
+		"deltaDistance": 0,
+		"start": function() {},
+		"tick": function() {},
+		"update": function() {},
+		"dummy": ""
+	};
 
-	game.goal = 1E3; // 1,000
-	game.step = 10;
+	game.dist = (window.scrollY - game.offset)/1000;
+	game.lastDistance = game.dist;
 
-	game.list = $('.list');
-	game.finished = 0;
-
-	game.lastTime = +(new Date());
-	game.idle = 1;
-	game.idleSince = 0;
-	game.deltaTime = 0;
-	game.now = game.lastTime;
-
-	game.htmlElement = document.querySelector('html');
-	game.bodyElement = document.querySelector('body');
-	game.distElement = document.querySelector('#m');
+	// ticker
+	game.tick = function() {
+		game.update();
+		window.requestAnimationFrame(game.tick);
+	};
 
 	// fired on every tick, when a frame is requested
-	game.tick = function() {
+	game.update = function() {
 		game.now = +(new Date());
 		game.deltaTime = game.now - game.lastTime;
 		game.lastTime = game.now;
 
 		trackDistance();
+		trackPlayers();
 
 		if (game.dist >= 1000) {
 			if (!game.finished) {
@@ -36,35 +61,33 @@
 		}
 	};
 
-	// ticker
-	game.update = function() {
-		game.tick();
-
-		window.requestAnimationFrame(game.update);
-	};
-
 	// position the lines from the top of the screen according to their data-meters attribute
 	function posLines() {
-		var $elem = $('.meters');
+		var elem,
+			i = 0,
+			m = 0,
+			list = document.querySelectorAll('[data-meters]');
 
-		$elem.each(function() {
-			var $this = $(this),
-				m = parseFloat($this.attr('data-meters'));
+		for (i; i < list.length; i++) {
+			elem = list[i];
+			m = parseFloat(elem.getAttribute('data-meters'));
 
-			$this.css('top', m*1000 + 'px');
-		});
+			elem.style.top = m*1000 + 'px';
+		};
 	}
 
 	// fill lines in steps for better orientation
 	function fillLines() {
-		var $elem = $('.meters'),
+		var elem,
+			i = 0,
+			list = document.querySelectorAll('.meters'),
 			goal = game.goal,
 			stepWidth = game.step,
 			steps = {};
 
-		$elem.each(function() {
-			var $this = $(this),
-				m = parseFloat($this.attr('data-meters'));
+		for (i; i < list.length; i++) {
+			elem = list[i];
+			m = parseFloat(elem.getAttribute('data-meters'));
 
 			steps[m] = !0;
 		});
@@ -84,10 +107,17 @@
 		game.list.append(li);
 	}
 
-	game.dist = 0;
-	game.offset = document.querySelector('.list').offsetTop;
-	game.lastDistance = 0;
-	game.deltaDistance = 0;
+	function fillPlayers() {
+		var pl = getNextPlayer(),
+			m = 0,
+			li = '';
+		do {
+			m = pl.dist;
+			li += '<li class="enemy" data-meters="' + m + '"><img src="'+pl.avatar+'">'+pl.name+'</li>';
+		} while(pl = getNextPlayer());
+		game.list.append(li);
+	}
+
 	function trackDistance() {
 		game.dist = (window.scrollY - game.offset)/1000;
 		game.distElement.innerHTML = numFormat(Math.max(0,game.dist));
@@ -95,19 +125,14 @@
 		// check if distance has change in the last X sec
 		game.deltaDistance = game.dist - game.lastDistance;
 
-		famobi.log(game.now, 'game.now');
-		famobi.log(game.idle, 'game.idle');
-		famobi.log(game.idleSince, 'game.idleSince');
-		famobi.log(game.deltaDistance, 'game.deltaDistance');
-		famobi.log(game.now - game.idleSince, '(game.now - game.idleSince)');
-		famobi.log(game.deltaTime, 'delta > 1 sec');
-
-		if (game.deltaDistance > 0) {
+		if (game.deltaDistance > 0.1) {
+			// movement
 			game.idle = 0;
 			game.idleSince = 0;
-			game.bodyElement.style.backgroundSize = '100% 100%';
+			game.bodyElement.style.backgroundSize = '100% 25%';
 		} else if (!game.idle) {
 			game.idleSince = game.idleSince || game.now;
+			// 1 sec of idleness
 			if ((game.now - game.idleSince) > 1E3) {
 				game.bodyElement.style.backgroundSize = 'auto auto';
 				game.idle = 1;
@@ -115,7 +140,15 @@
 			}
 		}
 
+		var nextLi = document.querySelector('.meters');
+		nextLi.style.position = 'fixed';
+		nextLi.style.top = '0';
+
 		game.lastDistance = game.dist;
+	}
+
+	function trackPlayers() {
+		
 	}
 
 	function numFormat(e){
@@ -143,6 +176,64 @@
 	}
 
 	function initPlayers() {
+		// retrieve list of friends/enemies from fb
+		// todo
+
+		// dummy data:
+		game.players.push({
+			"id": "xxx-xxxx-xxx",
+			"dist": Number(1000*game.players.length) + Number(Math.random()*1000),
+			"distf": function() { 
+				return numFormat(this.dist/1000);
+			},
+			"name": "ABC",
+			"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
+			"dummy": ""
+		});
+		game.players.push({
+			"id": "xxx-xxxx-xxx",
+			"dist": Number(1000*game.players.length) + Number(Math.random()*1000),
+			"distf": function() { 
+				return numFormat(this.dist/1000);
+			},
+			"name": "ABC",
+			"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
+			"dummy": ""
+		});
+		game.players.push({
+			"id": "xxx-xxxx-xxx",
+			"dist": (1000*game.players.length) + (Math.random() * 100),
+			"distf": function() { 
+				return numFormat(this.dist/1000);
+			},
+			"name": "ABC",
+			"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
+			"dummy": ""
+		});
+		game.players.push({
+			"id": "xxx-xxxx-xxx",
+			"dist": (1000*game.players.length) + (Math.random() * 100),
+			"distf": function() { 
+				return numFormat(this.dist/1000);
+			},
+			"name": "ABC",
+			"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
+			"dummy": ""
+		});
+		game.players.push({
+			"id": "xxx-xxxx-xxx",
+			"dist": (1000*game.players.length) + (Math.random() * 100),
+			"distf": function() { 
+				return numFormat(this.dist/1000);
+			},
+			"name": "ABC",
+			"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
+			"dummy": ""
+		});
+	}
+
+	function getNextPlayer() {
+		return game.nextPlayer = game.players.shift();
 	}
 
 	function finishGame() {
@@ -163,11 +254,12 @@
 	game.start = function() {
 		trackDistance();
 		fillLines();
-		posLines();
 		initPlayers();
+		fillPlayers();
+		posLines();
 
-		game.update();
+		game.tick();
 	};
 
 	game.start();
-})(faZepto);
+})();
