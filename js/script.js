@@ -103,7 +103,7 @@
 				li += '<li class="meters intermediate" data-meters="' + m + '">' + m + 'm</li>';
 			}
 		}
-		game.list.append(li);
+		game.list.innerHTML += li;
 	}
 
 	function fillPlayers() {
@@ -115,7 +115,7 @@
 			li += '<li class="enemy" data-meters="' + m + '"><img src="'+pl.avatar+'">'+pl.name+'</li>';
       pl = getNextPlayer();
 		} while(pl);
-		game.list.append(li);
+		game.list.innerHTML + li;
 	}
 
 	function trackDistance() {
