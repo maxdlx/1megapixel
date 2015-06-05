@@ -100,13 +100,25 @@ ul.list {
 	top: 0;
 	display: block;
 	position: absolute;
-	font-size: 20px;
 
-	height: 20px;
 	width: 100%;
 
 	background: #fff;
 	opacity: 0.8;
+}
+
+.enemy img {
+	display: block;
+	float: left;
+	margin-right: 20px;
+}
+
+.enemy .name,
+.enemy .m {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 button.finish {

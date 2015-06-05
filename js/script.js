@@ -112,10 +112,10 @@
 			li = '';
 		do {
 			m = pl.dist;
-			li += '<li class="enemy" data-meters="' + m + '"><img src="'+pl.avatar+'">'+pl.name+'</li>';
-      pl = getNextPlayer();
+			li += '<li class="enemy" data-meters="' + m + '"><div class="pos">#'+pl.pos+'</div><img src="'+pl.avatar+'"><span class="name">'+pl.name+'</span><span class="m">'+pl.distf()+'m</span></li>';
+			pl = getNextPlayer();
 		} while(pl);
-		game.list.innerHTML + li;
+		game.list.innerHTML += li;
 	}
 
 	function trackDistance() {
@@ -136,7 +136,7 @@
 			if ((game.now - game.idleSince) > 1E3) {
 				game.bodyElement.style.backgroundSize = 'auto auto';
 				game.idle = 1;
-				submitHighscore();
+				famobi.forceAd(submitHighscore);
 			}
 		}
 
@@ -180,70 +180,37 @@
 		// todo
 
 		// dummy data:
-		game.players.push({
-			"id": "xxx-xxxx-xxx",
-			"dist": Number(1000*game.players.length) + Number(Math.random()*1000),
-			"distf": function() { 
-				return numFormat(this.dist/1000);
-			},
-			"name": "ABC",
-			"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
-			"dummy": ""
-		});
-		game.players.push({
-			"id": "xxx-xxxx-xxx",
-			"dist": Number(1000*game.players.length) + Number(Math.random()*1000),
-			"distf": function() { 
-				return numFormat(this.dist/1000);
-			},
-			"name": "ABC",
-			"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
-			"dummy": ""
-		});
-		game.players.push({
-			"id": "xxx-xxxx-xxx",
-			"dist": (1000*game.players.length) + (Math.random() * 100),
-			"distf": function() { 
-				return numFormat(this.dist/1000);
-			},
-			"name": "ABC",
-			"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
-			"dummy": ""
-		});
-		game.players.push({
-			"id": "xxx-xxxx-xxx",
-			"dist": (1000*game.players.length) + (Math.random() * 100),
-			"distf": function() { 
-				return numFormat(this.dist/1000);
-			},
-			"name": "ABC",
-			"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
-			"dummy": ""
-		});
-		game.players.push({
-			"id": "xxx-xxxx-xxx",
-			"dist": (1000*game.players.length) + (Math.random() * 100),
-			"distf": function() { 
-				return numFormat(this.dist/1000);
-			},
-			"name": "ABC",
-			"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
-			"dummy": ""
-		});
+		for (var i = 0; i < 10; i++) {
+			for (var j = 0; j < 100; j++) {
+				game.players.push({
+					"id": "xxx-xxxx-xxx",
+					"dist": Number(1000*i) + Number(Math.random()*1000),
+					"distf": function() { 
+						return numFormat(this.dist/1000);
+					},
+					"pos": Number(i) + Number(j),
+					"name": "Friend " + Number(i) + Number(j),
+					"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
+					"dummy": ""
+				});
+			}
+		}
 	}
 
 	function getNextPlayer() {
-    game.nextPlayer = game.players.shift();
+		game.nextPlayer = game.players.shift();
 		return game.nextPlayer;
 	}
 
 	function finishGame() {
 		game.finished = 1;
-		alert(famobi.__("msg_finished"));
 		document.querySelector('.finish').style.display = 'block';
 		document.querySelector('.finish').onclick = submitHighscore;
-		// document.querySelector('body').style.minHeight = '1000000000000000px';
-		window.scrollTo(10,10);
+		// restart layout
+		requestAnimationFrame(function() {
+			alert(famobi.__("msg_finished"));
+			window.scrollTo(10,10);
+		});
 	}
 
 	function submitHighscore() {
