@@ -112,7 +112,7 @@
 			li = '';
 		do {
 			m = pl.dist;
-			li += '<li class="enemy" data-meters="' + m + '"><div class="pos">#'+pl.pos+'</div><img src="'+pl.avatar+'"><span class="name">'+pl.name+'</span><span class="m">'+pl.distf()+'m</span></li>';
+			li += '<li class="enemy" data-meters="' + m + '"><div class="m">&darr;&thinsp;'+numFormat(pl.dist/1000)+'<span class="unit">&thinsp;mpx</span></div><img src="'+pl.avatar+'"><span class="name">'+pl.name+'</span><span class="pos">#'+pl.pos+'</span></li>';
 			pl = getNextPlayer();
 		} while(pl);
 		game.list.innerHTML += li;
@@ -120,7 +120,7 @@
 
 	function trackDistance() {
 		game.dist = (window.scrollY - game.offset)/1000;
-		game.distElement.innerHTML = numFormat(Math.max(0,game.dist));
+		game.distElement.innerHTML = numFormat(Math.max(0,game.dist/1000));
 
 		// check if distance has change in the last X sec
 		game.deltaDistance = game.dist - game.lastDistance;
@@ -152,7 +152,7 @@
 	}
 
 	function numFormat(e){
-		return e.toFixed(3).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1.');
+		return e.toFixed(3).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1.').replace(/^0\./, '0,');
 	}
 
 	function signIn() {
@@ -186,10 +186,10 @@
 					"id": "xxx-xxxx-xxx",
 					"dist": Number(1000*i) + Number(Math.random()*1000),
 					"distf": function() { 
-						return numFormat(this.dist/1000);
+						return numFormat(Math.max(0, this.dist - game.offset)/1000);
 					},
 					"pos": Number(i) + Number(j),
-					"name": "Friend " + Number(i) + Number(j),
+					"name": "Friend " + (Number(i) + Number(j)),
 					"avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y",
 					"dummy": ""
 				});

@@ -8,12 +8,13 @@ html, body {
 
 body {
 	min-height: 1001000px;
+
+	text-rendering: optimizeSpeed;
+	transform: translate(0,0,0,0);
 }
 
 body > * {
 	padding: 0 10px;
-
-	transform: translate(0,0,0,0);
 
 	max-height: 100000000px;
 }
@@ -55,6 +56,16 @@ input[type=password] {
 	text-align: right;
 	font-size: 30px;
 }
+.dist #m {
+	font-family: "Comic Sans Ms", "Comic Sans", Comic, sans-serif;
+}
+
+.unit {
+	text-transform: lowercase;
+	letter-spacing: -0.05em;
+	font-variant: subscript;
+	font-family: "Comic Sans Ms", "Comic Sans", Comic, sans-serif;
+}
 
 h1, h2, h3 {
 	text-align: justify;
@@ -82,6 +93,7 @@ ul.list {
 	display: block;
 	position: absolute;
 	font-size: 100px;
+	font-family: "Comic Sans Ms", "Comic Sans", Comic, sans-serif;
 
 	height: 20px;
 	width: 100%;
@@ -113,21 +125,29 @@ ul.list {
 	margin-right: 20px;
 }
 
-.enemy .name,
 .enemy .m {
+	color: #3cf;
+	font-size: 50px;
+	font-family: "Comic Sans Ms", "Comic Sans", Comic, sans-serif;
+}
+
+.enemy .name,
+.enemy .pos {
 	display: block;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
+.enemy .pos {
+	color: #3cf;
+	font-size: 50px;
+	font-family: "Comic Sans Ms", "Comic Sans", Comic, sans-serif;
+}
+
 button.finish {
-	background: #333;
-	color: #fff;
 	display: none;
 
-	border: 0;
 	cursor: pointer;
-	font-size: 15px;
 	width: 100%;
 }

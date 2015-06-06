@@ -5,14 +5,13 @@
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,width=device-width,minimal-ui" />
 	<title>Megapixel Project</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<script src="//www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 	<script>
 		window.famobi_gameID = '1megapixel';
-		window.famobi_gameJS = ['js/script.js', function() {
+		window.famobi_gameJS = ['//www.parsecdn.com/js/parse-1.4.2.min.js', 'js/script.js', function() {
 			window.focus();
-		}];
 
-		Parse.initialize("2EIFjBw3AzCuKYsT8z7BGDM9tchuuGLEPT0JNa4k", "KKfKRgi7HPlHbyJZz0rpqlTS6BKHas76alBHzHTn");
+			Parse.initialize("2EIFjBw3AzCuKYsT8z7BGDM9tchuuGLEPT0JNa4k", "KKfKRgi7HPlHbyJZz0rpqlTS6BKHas76alBHzHTn");
+		}];
 	</script>
 	<script>
 		(function (document, url, fgJS, firstJS) {
@@ -51,17 +50,17 @@
 		</fieldset>
 	</form>
 	<ul class="list">
-		<li class="meters" data-meters="0">0m</li>
-		<li class="meters" data-meters="0.5">0.5m</li>
-		<li class="meters" data-meters="1">1m</li>
-		<li class="meters" data-meters="5">5m</li>
-		<li class="meters" data-meters="10">10m</li>
-		<li class="meters" data-meters="20">20m</li>
-		<li class="meters last" data-meters="1000">1,000,000m</li>
+		<li class="meters" data-meters="0">0&thinsp;<span class="unit">mpx</span></li>
+		<li class="meters" data-meters="0.5">0.5&thinsp;<span class="unit">mpx</span></li>
+		<li class="meters" data-meters="1">1&thinsp;<span class="unit">mpx</span></li>
+		<li class="meters" data-meters="5">5&thinsp;<span class="unit">mpx</span></li>
+		<li class="meters" data-meters="10">10&thinsp;<span class="unit">mpx</span></li>
+		<li class="meters" data-meters="20">20&thinsp;<span class="unit">mpx</span></li>
+		<li class="meters last" data-meters="1000">1,000,000&thinsp;<span class="unit">mpx</span></li>
 	</ul>
 	<div class="dist">
 		Distance:
-		<span id="m"></span>m
+		&darr;&thinsp;<span id="m">0,000</span>&thinsp;<span class="unit">mpx</span>
 		<button class="finish">Click here to submit <br>your distance</button>
 	</div>
 </article>
